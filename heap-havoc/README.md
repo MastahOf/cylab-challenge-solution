@@ -12,6 +12,7 @@ Examine the type of file by typing:
 ```bash
 file ./vuln
 pwn checksec ./vuln
+```
 from the examination we got the result:
 
 ```bash
