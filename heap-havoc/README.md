@@ -17,7 +17,10 @@ from the examination we got the result:
 
 ```bash
 [*] Arch  : i386-32-little
-    RELRO : Partial RELRO<br>
-    Stack : No Canary Found<br>
-    NX    : NX Enabled<br>
-    PIE   : No PIE<br>
+    RELRO : Partial RELRO
+    Stack : No Canary Found
+    NX    : NX Enabled
+    PIE   : No PIE
+```
+We know that the file has no much protection, only NX, it means we can't execute the stack. <br>
+But seeing from the title of challenge, seems we will not deal with the stack, instead we will deal with heap. so it's fine, the NX protection will not be our obstacle
