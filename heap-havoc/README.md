@@ -16,7 +16,7 @@ pwn checksec ./vuln
 from the examination we got the result:
 
 ```bash
-[$\color{blue}{\text{*}}$] Arch  : i386-32-little
+[<kbd>$\color{blue}{\text{*}}$<kbd>] Arch  : i386-32-little
     RELRO : $\color{yellow}{\text{Partial RELRO}}$
     Stack : $\color{red}{\text{No Canary Found}}$
     NX    : $\color{green}{\text{NX Enabled}}$
