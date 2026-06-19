@@ -88,12 +88,12 @@ if (i2->callback) i2->callback();
     printf("No winners this time, try again!\n");
 }
 ```
-This is the code, after I examine it for a while, I know where is the vulnerable. Let us just focus on the 'malloc` section, when the struct was initiated as `i1, i2, and i3`.<br>
+This is the code, after I examine it for a while, I know where is the vulnerable. Let us just focus on the `malloc` section, when the struct was initiated as `i1, i2, and i3`.<br>
 first one, the struct with label __i1__ it was initiated first into the heap. But inside the struct __i1__, __i1->name__ was also initiated to heap, so it would make new area of heap for __i1->name__ in the amount of 8 bytes.<br>
-second one, same, the strut
-### Heap Memory
--> heap for the i1 with size 20 bytes
-   -> metadata (prev_size = 4 byte, size + AMP flag = 4 byte) = 8 byte
-   -> i1 priority = 4 byte (type data is `int` that's why 4 byte)
-   -> i1 name = 4 byte (because the name was also initiated into heap, 4 bytes for the address of name heap)
-   -> i1 callback = 4 byte (because this was a function pointer, so callback hold an address)
+second one, same, the strut with label __i2__ was initiated to the heap and follow up with __i1->name__. <br>
+
+### 3. The Idea of Exploiting
+We know that there is `if (i2->callback) i2->callback()` this function pointer will call the whatever function inside the function pointer, but as we know the value of `callback` is NULL. We have to change it into `winner` address, so how we do it? yup, __Heap Overflow__, it so much alike with __Buffer Overflow__ the difference only where it was exploited.
+
+## 4. Create the exploit
+Because we already know what should we do, that is change the `i2->callback` value into winner address with __Heap Overflow__ so here we go, we should know the payload from our __input__ (i1->name) to our __target__ (i2->callback)
