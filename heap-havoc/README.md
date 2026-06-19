@@ -16,8 +16,8 @@ pwn checksec ./vuln
 from the examination we got the result:
 
 
-[<kbd>$\color{blue}{\text{*}}$<kbd>] Arch  : i386-32-little
-    RELRO : $\color{yellow}{\text{Partial RELRO}}$
-    Stack : $\color{red}{\text{No Canary Found}}$
-    NX    : $\color{green}{\text{NX Enabled}}$
-    PIE   : $\coloe{red}{\text{No PIE}}$
+[$\color{blue}{\text{*}}$] Arch  : i386-32-little<br>
+    RELRO : $\color{yellow}{\text{Partial RELRO}}$<br>
+    Stack : $\color{red}{\text{No Canary Found}}$<br>
+    NX    : $\color{green}{\text{NX Enabled}}$<br>
+    PIE   : $\coloe{red}{\text{No PIE}}$<br>
