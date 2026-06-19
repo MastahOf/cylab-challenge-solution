@@ -12,4 +12,4 @@ Examine the type of file by typing:
 '''
 file ./vuln
 pwn checksec ./vuln
-'''
+
