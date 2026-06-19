@@ -13,6 +13,7 @@ Examine the type of file by typing:
 file ./vuln
 pwn checksec ./vuln
 from the examination we got the result:
+
 ```bash
 [$\color{blue}{\text{*}}$] Arch  : i386-32-little
     RELRO : $\color{yellow}{\text{Partial RELRO}}$
