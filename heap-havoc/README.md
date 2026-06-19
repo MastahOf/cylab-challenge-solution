@@ -100,10 +100,12 @@ Because we already know what should we do, that is change the `i2->callback` val
 
 ## Find the offset
 Actually there is a fast method, but because the chunk isn't much, so I calculate it manually.<br>
+---
     i1->name heap: 8 byte<br>
     i2 metadata  : 8 byte<br>
-    i2->priority : 4 byte
-    i2->name     : 4 byte
+    i2->priority : 4 byte<br>
+    i2->name     : 4 byte<br>
+---
 so total of byte is 24, that's the offset. But there is one problem, i2-> name was holding an heap address as well, meanwhile, there is also<br>
 `strcpy(i2->name, argv[2])` mean we will write a text inside the heap of i2-> name, so we can't put random address or it could make a crash, the solution find the address that has `w` argument, it mean writeable, so everything will fine, I take the random heap number actually. but we can take an example from the hint number 2 like in `cylabacademy.org`
 <details>
