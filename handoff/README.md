@@ -104,3 +104,4 @@ if we look at the code above, we notice there are `buffer overflow`. First one f
 We know the vulnerability is `buffer overflow` but there is no `win` function to get the flag. So we must create ouw own shellcode. Let's do it
 
 ### Create the exploitation code
+First thing we should know the offset to overwrite the `RIP`
