@@ -11,4 +11,9 @@ As usual, I use `pwntools` to check the metadata of file. <br>
 <br>
 From the image above we can see that there's no protection at all. so it will make our life easier
 ### 2. Review the code
-After we know the metadata of file, it's a right time to review the code to check where is the vulnerability
+After we know the metadata of file, it's a right time to review the code to check where is the vulnerability. <br>
+<br>
+C```
+
+```
+<br>
