@@ -98,4 +98,5 @@ int main() {
 ```
 <br>
 
-`malloc`
+if we look at the code above, we notice there are `buffer overflow`. First one from the `name` input and second one when we asked to give a `feedback`. <br>
+We know the vulnerability is `buffer overflow` but there is no `win` function to get the flag. So we must create ouw own shellcode. Let's do it
