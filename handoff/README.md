@@ -114,6 +114,25 @@ From the image above `rbp-0xc` is the location of `feedback` variable, means the
 <br>
 `0x14` was the offset from `feedback` variable to `return address`. so the idea is I will overwrite the `RIP`, instead jumping into the right way, I'll turn into `RAX`, so I will seek the address of `jmp rax` with `ROPgadget`. <br>
 <br>
-<img width="853" height="61" alt="image" src="https://github.com/user-attachments/assets/d1833591-fc2c-4aab-ad21-91d09dd51bba" />
+<img width="853" height="61" alt="image" src="https://github.com/user-attachments/assets/d1833591-fc2c-4aab-ad21-91d09dd51bba" /><br>
 <br>
-Found it! the address of `jmp rax` is `0x000000000040116c`.
+Found it! the address of `jmp rax` is `0x000000000040116c`. but soon, I realize, the `fgets` only give me 32 bytes, if we recalculate `20 byte` fo padding and then byte 21 - 28 for the `RIP address` filled with `jmp rax`, moreover there's code `feedback[7] == '\0'`, mean we can't put the shellcode as padding. <br>
+so I have another idea, if we jump to the specific address of stack, and then I reseacrh and ask to AI, there's mrthod called `near jump` in short definition basically we do like this `jmp offset`. <br>
+so the idea is I put my shellcode in `choice == 2` or when we wanna send a message, because of the lenght is `64 bytes`, and then I seek for the address of variable `message`. <br>
+<br>
+<img width="782" height="65" alt="image" src="https://github.com/user-attachments/assets/3b00c92f-6d4b-4bf1-b1c0-da5bc3ff6e54" /><br>
+<br>
+From the image, it's shown that the offset of `message` variable is in `rbp-0x2e0`, and then we will seek the stack address of `RBP`.<br>
+<br>
+<img width="1467" height="95" alt="image" src="https://github.com/user-attachments/assets/e2643230-bda1-42ac-bcba-1b5d8aaa6382" /><br>
+<br>
+From the image we know that the address of `RBP` is `0x7fffffffdcf0`.<br>
+so we just need subtract it with the `rbp-0x2e0` to get the exact address of the variable.<br>
+<br>
+`0x7fffffffdcf0 - 0x2e0 = 0x7fffffffda10`.<br>
+<br>
+Then we just need subtract the result or `0x7fffffffda10` with the address of `RBP` or `0x7fffffffdcf0`.<br>
+<br>
+then we get `0x7fffffffdcf0 - 0x7fffffffda10 = `
+
+
