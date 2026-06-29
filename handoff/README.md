@@ -97,3 +97,4 @@ int main() {
 }
 ```
 <br>
+First time I look at it, I found nothing, after a while, I realize that the fgets give size more than the variable can hold, if we look at `choice == 1` we asked to put our name, but if we look at the struct we're just given `8 bytes` while the fgets give us `32 bytes` it mean we can `buffer overflow`. Not only that, we also have another `buffer overflow` in `choice == 3` or when we asked to give a feedback, so it is, we know the problem, buffer overflow
