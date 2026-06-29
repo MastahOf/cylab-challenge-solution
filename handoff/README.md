@@ -110,7 +110,7 @@ First thing we should know the offset to overwrite the `RIP`. <br>
 <br>
 From the image above `rbp-0xc` is the location of `feedback` variable, means the locations is `0xc` from the `RBP` because this is `64-bit` means the `RBP` has 8 byte lenght, so <br> 
 <br>
-`0xc + 0x8 = 0x14`
+`0xc + 0x8 = 0x14` <br>
 <br>
 `0x14` was the offset from `feedback` variable to `return address`. so the idea is I will overwrite the `RIP`, instead jumping into the right way, I'll turn into `RAX`, so I will seek the address of `jmp rax` with `ROPgadget`. <br>
 <br>
