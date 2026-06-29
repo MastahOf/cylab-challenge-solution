@@ -104,4 +104,16 @@ if we look at the code above, we notice there are `buffer overflow`. First one f
 We know the vulnerability is `buffer overflow` but there is no `win` function to get the flag. So we must create ouw own shellcode. Let's do it
 
 ### Create the exploitation code
-First thing we should know the offset to overwrite the `RIP`
+First thing we should know the offset to overwrite the `RIP`. <br>
+<br>
+<img width="701" height="17" alt="image" src="https://github.com/user-attachments/assets/72a25517-88f8-47f9-b6f3-e50b56121e52" />
+<br>
+From the image above `rbp-0xc` is the location of `feedback` variable, means the locations is `0xc` from the `RBP` because this is `64-bit` means the `RBP` has 8 byte lenght, so <br> 
+<br>
+`0xc + 0x8 = 0x14`
+<br>
+`0x14` was the offset from `feedback` variable to `return address`. so the idea is I will overwrite the `RIP`, instead jumping into the right way, I'll turn into `RAX`, so I will seek the address of `jmp rax` with `ROPgadget`. <br>
+<br>
+<img width="853" height="61" alt="image" src="https://github.com/user-attachments/assets/d1833591-fc2c-4aab-ad21-91d09dd51bba" />
+<br>
+Found it! the address of `jmp rax` is `0x000000000040116c`.
