@@ -141,6 +141,8 @@ After that we will find the offset from `0x7fffffffdce9` to `rbp-0x2e0` or `0x7f
 <br>
 so that's our offset, so we can create the payload. <br>
 <br>
+And then we change the offset `-0x2d1` into __opcode hex__ or __\x2f\xfd\xff\xff__ <br>
+<br>
 ```Python
 from pwn import *
 
